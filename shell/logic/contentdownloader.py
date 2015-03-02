@@ -1,19 +1,23 @@
 __author__ = 'rainbowbreeze'
 
-class PageDownloader:
+import requests
+
+class ContentDownloader:
     """Downloads pages from the Internet
+
     """
 
     def __init__(self):
         pass
 
-    def downloadPage(self, pageUrl):
+    def downloadPage(self, page_url):
         """Downloads a page from the Internet
 
-        :param pageUrl: url of the page to download
+        :param page_url: url of the page to download
         :return: a string object that contains the downloaded page
         """
-        pass
+        response = requests.get(page_url)
+        return response.text
 
 
     def downloadFile(self, fileUrl, fileName):

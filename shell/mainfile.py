@@ -1,5 +1,7 @@
 __author__ = 'rainbowbreeze'
 
+from logic.contentdownloader import ContentDownloader
+
 def dostuff():
     with open('mainfile.py', 'r') as f:
         read_line = f.read()
@@ -8,4 +10,7 @@ def dostuff():
 
 if __name__ == "__main__":
     print "ciao"
-    dostuff()
+    # dostuff()
+    downloader = ContentDownloader()
+    page = downloader.downloadPage("http://www.sanmatteo.org/site/home/il-san-matteo/albo-on-line.html")
+    print(page)

@@ -40,4 +40,4 @@ class ItemsManager:
         :param fileName:
         :return:
         """
-        return baseDir + os.
+        pass
