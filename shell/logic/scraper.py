@@ -1,8 +1,11 @@
 __author__ = 'rainbowbreeze'
 
-class Parser:
+class Scraper:
     """Parses a downloaded page and find items to download
 
+    Some info on:
+      http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python
+      http://jakeaustwick.me/python-web-scraping-resource/
     """
 
     def __init__(self):
