@@ -13,15 +13,15 @@ class ItemsManager:
 
 
 
-    def checkForDuplicates(self, allFileUrls):
+    def checkForDuplicates(self, all_file_urls):
         """From a list of item to download, returns only the ones to download,
            cutting off the ones already present in the download directory;
 
-        :param allFileNames:
+        :param all_file_urls:
         :return:
         """
-        filesDownloaded = glob.glob()
-        for file in filesDownloaded:
+        files_downloaded = glob.glob()
+        for file in files_downloaded:
             print(file)
 
 
