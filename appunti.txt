@@ -1,6 +1,0 @@
-NOTES
-
-Start GAE:
-* Go to GAE project dir and run dev_server.py .
-* Go to master dir and run dev_server.py gae
-
