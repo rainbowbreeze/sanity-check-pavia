@@ -5,8 +5,8 @@ class Bando:
 
     """
 
-    def __init__(self, title, url):
+    def __init__(self, title, date, url):
         # TODO lowercase the title
         self.title = title
+        self.date = date
         self.url = url
-        pass
