@@ -2,6 +2,7 @@ __author__ = 'rainbowbreeze'
 
 import os
 import glob
+from datetime import datetime
 
 class ItemsManager:
     """Manages item, compares them with the existing ones and, in case, download new ones
@@ -12,6 +13,9 @@ class ItemsManager:
         self._downloadDir = "downloaded"
 
 
+    def downloadBando(self, bando):
+        file_name = "{0}-{1}".format(datetime.strftime(bando.date, "%Y%m%d"), "aaa")
+        print(file_name)
 
     def checkForDuplicates(self, all_file_urls):
         """From a list of item to download, returns only the ones to download,

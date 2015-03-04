@@ -16,6 +16,7 @@ class ContentDownloader:
         :param page_url: url of the page to download
         :return: a string object that contains the downloaded page
         """
+        print("Downloading page at " + page_url)
         response = requests.get(page_url)
         return response.text
 
