@@ -94,14 +94,14 @@ class ItemsManager:
 
         # Unicode support
         # http://stackoverflow.com/questions/12309269/write-json-data-to-file-in-python
-        with io.open(self._controlFileName, "w", encoding='utf-8') as outfile:
+        with io.open(self._controlFileName, "a", encoding='utf-8') as outfile:
             outfile.write(unicode(
                 json.dumps(
-                items_scraped,
-                outfile,
-                indent=2,
-                default=self._to_json,
-                ensure_ascii=False)
+                    items_scraped,
+                    outfile,
+                    indent=2,
+                    default=self._to_json,
+                    ensure_ascii=False)
             ))
 
 """
