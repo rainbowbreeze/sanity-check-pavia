@@ -11,4 +11,11 @@ from a scratch Ubuntu distro
  pip install requests beautifulsoup4
 
 
+TESTS
+ pip install nose
+ cd tests
+ nosetests
+ when creating dirs, creates python modules with __init__.py file, otherwise nose will not use them
+
+
 

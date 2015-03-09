@@ -1,14 +1,17 @@
-from unittest import TestCase
-
 __author__ = 'rainbowbreeze'
 
+import unittest
 
-class TestItemsManager(TestCase):
+class TestItemsManager(unittest.TestCase):
     def test_checkForDuplicates(self):
-        self.fail()
+        pass
 
     def test_generateChecksumFromUrl(self):
-        self.fail()
+        pass
 
     def test_buildPathName(self):
-        self.fail()
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()
