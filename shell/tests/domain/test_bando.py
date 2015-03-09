@@ -1,3 +1,4 @@
+import json
 
 __author__ = 'rainbowbreeze'
 
@@ -26,6 +27,15 @@ class TestBando(unittest.TestCase):
         self.assertEqual(len(set([bando2, bando3])), 2)
         self.assertEqual(len(set([bando1, bando2, bando3])), 2)
         self.assertEqual(len(set([bando1, bando2, bando3, bando4, bando5])), 4)
+
+    def test_json(self):
+        now = datetime.datetime.now()
+        bando1 = Bando("Title1", now, "http://urlfile1.zip")
+        json_dict = bando1.to_json()
+        self.assertTrue(json_dict)
+        bando2 = Bando.from_json(json_dict)
+        self.assertEquals(bando1, bando2)
+
 
 if __name__ == '__main__':
     unittest.main()

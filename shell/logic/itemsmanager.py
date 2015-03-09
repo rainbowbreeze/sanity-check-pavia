@@ -22,26 +22,6 @@ class ItemsManager:
         file_name = "{0}-{1}".format(datetime.strftime(bando.date, "%Y%m%d"), "aaa")
         print(file_name)
 
-    def checkForDuplicates(self, all_file_urls):
-        """From a list of item to download, returns only the ones to download,
-           cutting off the ones already present in the download directory;
-
-        :param all_file_urls:
-        :return:
-        """
-        files_downloaded = glob.glob()
-        for file in files_downloaded:
-            print(file)
-
-
-    def generateChecksumFromUrl(self, url):
-        """From a resource url, generate a checksum that correspond to the name of the file
-
-        :param url:
-        :return:
-        """
-        pass
-
     def buildPathName(self, baseDir, fileName):
         """From a directory and a file, build the final path
 
@@ -51,33 +31,57 @@ class ItemsManager:
         """
         pass
 
-    def checkForNewItems(self, items_scraped):
-        """
+    def find_new_item_to_download(self, items_scraped):
+        """Search for the item that need to be dowloaded
 
         :param items_scraped:
         :return:
         """
+        # Reads the items already downloaded
+        items_downloaded = self._read_saved_items_from_file(self._controlFileName)
+        # Compares with the new items
+        new_items = self._search_for_new_items(items_downloaded, items_scraped)
+        return new_items
 
-        # http://stackoverflow.com/questions/82831/check-if-a-file-exists-using-python
-        if not os.path.isfile(self._controlFileName):
-            print "Control file doesn't exist"
-            return items_scraped
+    def save_to_control_file(self, new_items_downloaded):
+        """Saved the list of element downloaded
 
-        # Loads already saved bando items
-        with open(self._controlFileName, "r") as source_data:
-            saved_items_json = json.load(source_data)
+        :param new_items_downloaded:
+        :return:
+        """
 
-        # Transforms it in list of objects
-        saved_items = []
-        for obj in saved_items_json:
-            saved_items.append(Bando.from_json(obj))
+        if not new_items_downloaded or 0 == len(new_items_downloaded):
+            print "Nothing to add to the file, exiting"
+            return
 
-        # Returns the items that are not present in the saves list
-        new_items = [x for x in items_scraped if x not in saved_items]
+        items_total = self._read_saved_items_from_file(self._controlFileName)
+        items_total.extend(new_items_downloaded)
+
+        # Unicode support
+        # http://stackoverflow.com/questions/12309269/write-json-data-to-file-in-python
+        with io.open(self._controlFileName, "a", encoding='utf-8') as outfile:
+            outfile.write(unicode(
+                json.dumps(
+                    items_total,
+                    outfile,
+                    indent=2,
+                    default=self._to_json,
+                    ensure_ascii=False)
+            ))
+
+    def _search_for_new_items(self, items_downloaded, items_scraped):
+        """From all the scraped items, returns only the ones that that need to
+        be downloaded because are new
+
+        :param items_downloaded: items already downloaded
+        :param items_scraped: items scraped
+        :return: a list of items that need to be downloaded
+        """
+        # Pythonic way to return the items that are not present in the saved list
+        new_items = [x for x in items_scraped if x not in items_downloaded]
         return new_items
 
     def _to_json(self, obj):
-
         if isinstance(obj, Bando):
             return obj.to_json()
         #if isinstance(obj, datetime):
@@ -85,24 +89,28 @@ class ItemsManager:
         #    return serial
         return obj.__dict__
 
-    def saveToControlFile(self, items_scraped):
+    def _read_saved_items_from_file(self, file_name):
         """
+        Reads already downloaded items from a file and put them in a list
 
-        :param items_scraped:
-        :return:
+        :return: a list of Bando objects
         """
+        # http://stackoverflow.com/questions/82831/check-if-a-file-exists-using-python
+        if not os.path.isfile(file_name):
+            print "Control file doesn't exist"
+            return []
 
-        # Unicode support
-        # http://stackoverflow.com/questions/12309269/write-json-data-to-file-in-python
-        with io.open(self._controlFileName, "a", encoding='utf-8') as outfile:
-            outfile.write(unicode(
-                json.dumps(
-                    items_scraped,
-                    outfile,
-                    indent=2,
-                    default=self._to_json,
-                    ensure_ascii=False)
-            ))
+        # Loads already saved bando items
+        with open(file_name, "r") as source_data:
+            saved_items_json = json.load(
+                source_data)
+
+        # Transforms it in a list of objects
+        saved_items = []
+        for obj in saved_items_json:
+            saved_items.append(Bando.from_json(obj))
+        return saved_items
+
 
 """
         json_dict = json.loads(data)
